@@ -5,20 +5,34 @@
 // https://golang.org/doc/effective_go.html#commentary
 package bob
 
+import "regexp"
+
+const (
+	msgQuestion     = "Sure."
+	msgYell         = "Whoa, chill out!"
+	msgYellQuestion = "Calm down, I know what I'm doing!"
+	msgNone         = "Fine. Be that way!"
+	msgAnything     = "Whatever."
+)
+
 // Hey should have a comment documenting it.
 func Hey(remark string) string {
-	// Write some code here to pass the test suite.
-	// Then remove all the stock comments.
-	// They're here to help you get started but they only clutter a finished solution.
-	// If you leave them in, reviewers may protest!
-	str := "azAZ?"
 
-	if remark[len(remark)-1] == str[5] {
-		for _, v := range remark {
-			if v >= str[0] && v <= str[1] {
-
-			}
-		}
+	if len(remark) == 0 {
+		return msgNone
+	} else if i, _ := regexp.MatchString("^\\s+$", remark); i {
+		return msgNone
 	}
-	return ""
+	// if matched, _ := regexp.MatchString("^([\\w\\s\\.\"',\\!\\?\\.])+$", remark); matched {
+	quest, _ := regexp.MatchString("\\?\\s*$", remark)
+	yell, _ := regexp.MatchString("^([^a-z]*[A-Z][^a-z]*)+$", remark)
+	if quest && yell {
+		return msgYellQuestion
+	} else if yell {
+		return msgYell
+	} else if quest {
+		return msgQuestion
+	}
+
+	return msgAnything
 }
