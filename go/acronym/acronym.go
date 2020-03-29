@@ -6,7 +6,6 @@
 package acronym
 
 import (
-	"bytes"
 	"regexp"
 	"strings"
 )
@@ -19,7 +18,7 @@ func Abbreviate(s string) string {
 	// If you leave them in, reviewers may protest!
 	re := regexp.MustCompile("([^A-Z'][A-Z]|^[A-Z])")
 	letters := re.FindAllString(strings.ToUpper(s), -1)
-	var b bytes.Buffer
+	var b strings.Builder
 	for _, v := range letters {
 		b.WriteByte(v[len(v)-1])
 	}
